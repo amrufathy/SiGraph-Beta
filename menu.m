@@ -91,10 +91,9 @@ function Cancel_Callback(hObject, eventdata, handles)
 choice = questdlg('Are you sure you would like to quit ?', ...
 	'Exit Dialogue', ...
 	'Yes','No','No');
-    switch choice
-        case 'Yes'
+	if choice == 'Yes'
             close(gcf);
-    end
+    	end
 
 
 % --- Executes on button press in Next.

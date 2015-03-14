@@ -224,7 +224,7 @@ freq = str2num(get(handles.edit2,'string'));
 initTime = str2num(get(handles.edit3,'string'));
 finTime = str2num(get(handles.edit4,'string'));
 step = str2num(get(handles.edit5,'string'));
-if(get(handles.edit6,'string')==0)
+if(get(handles.edit6,'string') == 0)
     shift = 0;
 else
     shift = str2num(get(handles.edit6,'string'));

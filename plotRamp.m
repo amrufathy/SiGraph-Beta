@@ -1,6 +1,6 @@
-function plotRamp(slope, shift)
+function plotRamp(slope, shift,ti,step,tf)
 figure;
-t = 0:0.01:5;
+t = ti:step:tf;
 x = slope*t + shift;
 plot(t,x);
 end

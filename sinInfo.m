@@ -219,10 +219,10 @@ function plot_Callback(hObject, eventdata, handles)
 % hObject    handle to plot (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA) 
-    if (isempty(get(handles.edit1,'string')))
+    if (isempty(get(handles.edit1,'num')))
         warndlg('Please Enter Value')
     else
-        amplitude = str2num(get(handles.edit1,'string'));
+        amplitude = str2num(get(handles.edit1,'num'));
     end
     if (isempty(get(handles.edit2,'string')))
         warndlg('Please Enter Value')

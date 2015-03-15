@@ -68,7 +68,6 @@ function varargout = menu_OutputFcn(hObject, eventdata, handles)
 % hObject    handle to figure
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
 % Get default command line output from handles structure
 varargout{1} = handles.output;
 
@@ -80,14 +79,19 @@ function sinebutton_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 % Hint: get(hObject,'Value') returns toggle state of sinebutton
 
+% --- Executes on button press in rampbutton.
+function rampbutton_Callback(hObject, eventdata, handles)
+% hObject    handle to rampbutton (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+% Hint: get(hObject,'Value') returns toggle state of rampbutton
+
 
 % --- Executes on button press in Cancel.
 function Cancel_Callback(hObject, eventdata, handles)
 % hObject    handle to Cancel (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-% Cancel
-% Construct a questdlg with three options
 choice = questdlg('Are you sure you would like to quit ?', ...
 	'Exit Dialogue', ...
 	'Yes','No','No');
@@ -101,18 +105,8 @@ function Next_Callback(hObject, eventdata, handles)
 % hObject    handle to Next (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-% Next
     if (get(handles.sinebutton,'Value'))
         sinInfo
     elseif (get(handles.rampbutton,'Value'))
         rampInfo
     end
-
-
-% --- Executes on button press in rampbutton.
-function rampbutton_Callback(hObject, eventdata, handles)
-% hObject    handle to rampbutton (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hint: get(hObject,'Value') returns toggle state of rampbutton

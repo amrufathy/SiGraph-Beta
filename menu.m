@@ -22,7 +22,7 @@ function varargout = menu(varargin)
 
 % Edit the above text to modify the response to help menu
 
-% Last Modified by GUIDE v2.5 14-Mar-2015 22:02:52
+% Last Modified by GUIDE v2.5 15-Mar-2015 00:11:37
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -91,9 +91,9 @@ function Cancel_Callback(hObject, eventdata, handles)
 choice = questdlg('Are you sure you would like to quit ?', ...
 	'Exit Dialogue', ...
 	'Yes','No','No');
-	if choice == 'Yes'
-            close(gcf);
-    	end
+    if choice == 'Yes'
+        close(gcf);
+    end
 
 
 % --- Executes on button press in Next.
@@ -102,6 +102,17 @@ function Next_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 % Next
-    if (get(handles.sinebutton,'Value') == 1)
+    if (get(handles.sinebutton,'Value'))
         sinInfo
+    elseif (get(handles.rampbutton,'Value'))
+        rampInfo
     end
+
+
+% --- Executes on button press in rampbutton.
+function rampbutton_Callback(hObject, eventdata, handles)
+% hObject    handle to rampbutton (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of rampbutton

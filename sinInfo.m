@@ -22,7 +22,7 @@ function varargout = sinInfo(varargin)
 
 % Edit the above text to modify the response to help sinInfo
 
-% Last Modified by GUIDE v2.5 14-Mar-2015 23:35:51
+% Last Modified by GUIDE v2.5 15-Mar-2015 10:22:13
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -116,7 +116,6 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
     set(hObject,'BackgroundColor','white');
 end
 
-
 function edit3_Callback(hObject, eventdata, handles)
 % hObject    handle to edit3 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -182,6 +181,7 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
     set(hObject,'BackgroundColor','white');
 end
 
+
 function edit6_Callback(hObject, eventdata, handles)
 % hObject    handle to edit6 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -218,15 +218,51 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 function plot_Callback(hObject, eventdata, handles)
 % hObject    handle to plot (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA) 
+    if (isempty(get(handles.edit1,'string')))
+        warndlg('Please Enter Value')
+    else
+        amplitude = str2num(get(handles.edit1,'string'));
+    end
+    if (isempty(get(handles.edit2,'string')))
+        warndlg('Please Enter Value')
+    else
+        freq = str2num(get(handles.edit2,'string'));
+    end
+    if (isempty(get(handles.edit3,'string')))
+        warndlg('Please Enter Value')
+    else
+        initTime = str2num(get(handles.edit3,'string'));
+    end
+    if (isempty(get(handles.edit4,'string')))
+        warndlg('Please Enter Value')
+    else
+        finTime = str2num(get(handles.edit4,'string'));
+    end
+    if (isempty(get(handles.edit5,'string')))
+        warndlg('Please Enter Value')
+    else
+        step = str2num(get(handles.edit5,'string'));
+    end
+    if (isempty(get(handles.edit6,'string')))
+            shift = 0;
+    else
+        shift = str2num(get(handles.edit6,'string'));
+    end
+    plotSine(initTime,finTime,step,amplitude,freq,shift)
+
+
+% --- Executes on button press in cancel.
+function cancel_Callback(hObject, eventdata, handles)
+% hObject    handle to cancel (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-amplitude = str2num(get(handles.edit1,'string'));
-freq = str2num(get(handles.edit2,'string'));
-initTime = str2num(get(handles.edit3,'string'));
-finTime = str2num(get(handles.edit4,'string'));
-step = str2num(get(handles.edit5,'string'));
-if(get(handles.edit6,'string') == 0)
-    shift = 0;
-else
-    shift = str2num(get(handles.edit6,'string'));
-end
-plotSine(initTime,finTime,step,amplitude,freq,shift)
+choice = questdlg('Are you sure you would like to quit ?', ...
+	'Exit Dialogue', ...
+	'Exit','Go Back','Go Back');
+    switch choice
+        case 'Exit'
+            close(gcf);
+        case 'Go Back'
+            menu
+    end

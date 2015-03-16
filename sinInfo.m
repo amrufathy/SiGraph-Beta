@@ -22,7 +22,7 @@ function varargout = sinInfo(varargin)
 
 % Edit the above text to modify the response to help sinInfo
 
-% Last Modified by GUIDE v2.5 15-Mar-2015 10:22:13
+% Last Modified by GUIDE v2.5 16-Mar-2015 16:45:12
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -214,33 +214,79 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 % set(handles.edit3,'string',o);
 
 
+% --- Executes on selection change in aplitudepopupmenu1.
+function aplitudepopupmenu1_Callback(hObject, eventdata, handles)
+% hObject    handle to aplitudepopupmenu1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: contents = cellstr(get(hObject,'String')) returns aplitudepopupmenu1 contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from aplitudepopupmenu1
+
+
+% --- Executes during object creation, after setting all properties.
+function aplitudepopupmenu1_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to aplitudepopupmenu1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: popupmenu controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on selection change in freqpopupmenu2.
+function freqpopupmenu2_Callback(hObject, eventdata, handles)
+% hObject    handle to freqpopupmenu2 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: contents = cellstr(get(hObject,'String')) returns freqpopupmenu2 contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from freqpopupmenu2
+
+
+% --- Executes during object creation, after setting all properties.
+function freqpopupmenu2_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to freqpopupmenu2 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: popupmenu controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
 % --- Executes on button press in plot.
 function plot_Callback(hObject, eventdata, handles)
 % hObject    handle to plot (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA) 
-    if (isempty(get(handles.edit1,'num')))
-        warndlg('Please Enter Value')
+% handles    structure with handles and user data (see GUIDATA)
+if (isempty(get(handles.edit1,'string')))
+        warndlg('Please Enter Amplitude')
     else
-        amplitude = str2num(get(handles.edit1,'num'));
+        amplitude = str2num(get(handles.edit1,'string'));
     end
     if (isempty(get(handles.edit2,'string')))
-        warndlg('Please Enter Value')
+        warndlg('Please Enter Frequency')
     else
         freq = str2num(get(handles.edit2,'string'));
     end
     if (isempty(get(handles.edit3,'string')))
-        warndlg('Please Enter Value')
+        warndlg('Please Enter Initial Time')
     else
         initTime = str2num(get(handles.edit3,'string'));
     end
     if (isempty(get(handles.edit4,'string')))
-        warndlg('Please Enter Value')
+        warndlg('Please Enter Final Time')
     else
         finTime = str2num(get(handles.edit4,'string'));
     end
     if (isempty(get(handles.edit5,'string')))
-        warndlg('Please Enter Value')
+        warndlg('Please Enter Time Step')
     else
         step = str2num(get(handles.edit5,'string'));
     end
@@ -252,17 +298,19 @@ function plot_Callback(hObject, eventdata, handles)
     plotSine(initTime,finTime,step,amplitude,freq,shift)
 
 
+
 % --- Executes on button press in cancel.
 function cancel_Callback(hObject, eventdata, handles)
 % hObject    handle to cancel (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
 choice = questdlg('Are you sure you would like to quit ?', ...
 	'Exit Dialogue', ...
-	'Exit','Go Back','Go Back');
+	'Exit','Back to main menu','Cancel','');
     switch choice
         case 'Exit'
             close(gcf);
-        case 'Go Back'
+        case 'Back to main menu'
             menu
     end

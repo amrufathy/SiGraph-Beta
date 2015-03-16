@@ -1,7 +1,5 @@
-function [] = plot_Impulse(t,loc)
-t = loc-10:1:loc+10;
-x = zeros(1,21);
-x(11) = 1; 
-disp(loc);
+function [] = plot_Impulse(t, loc)
+x = zeros(1, size(t,2));
+disp(find(x == loc))
+x(find(t == loc)) = 1;
 stem(t, x);
-

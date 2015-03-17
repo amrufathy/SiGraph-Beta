@@ -182,6 +182,7 @@ function addFunction_Callback(hObject, eventdata, handles)
             for i=1:size(input)
                 input{i} = str2num(input{i});
             end
+            plotRamp(initTime,finTime,tstep,input{1},input{2})
         case 4%expo
             prompt = {'Amplitude:','Exponent:'};
             dlg_title = 'Exponential Wave Parameters';

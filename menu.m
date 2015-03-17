@@ -22,7 +22,7 @@ function varargout = menu(varargin)
 
 % Edit the above text to modify the response to help menu
 
-% Last Modified by GUIDE v2.5 17-Mar-2015 00:15:52
+% Last Modified by GUIDE v2.5 17-Mar-2015 21:19:38
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -116,7 +116,6 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
-
 function finTime_Callback(hObject, eventdata, handles)
 % hObject    handle to finTime (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -144,6 +143,8 @@ function addFunction_Callback(hObject, eventdata, handles)
 % hObject    handle to addFunction (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
+    %set(hObject,'Enable','off') %turn off the button
     if (isempty(get(handles.initTime,'string')))
         warndlg('Please Enter Initial Time')
     else
@@ -159,6 +160,7 @@ function addFunction_Callback(hObject, eventdata, handles)
     else
         tstep = str2num(get(handles.stepTime,'string'));
     end
+    t = initTime:tstep:finTime;
     switch(get(handles.listbox1,'value'))
         case 1%sin       
             prompt = {'Amplitude:','Frequency:','Angle Shift'};
@@ -167,7 +169,7 @@ function addFunction_Callback(hObject, eventdata, handles)
             for i=1:size(input)
                 input{i} = str2num(input{i});
             end
-            plotSine(initTime,finTime,tstep,input{1},input{2},input{3})
+            plotSine(t,input{1},input{2},input{3});
         case 2%dc
             prompt = {'Amplitude:'};
             dlg_title = 'DC Wave Parameters';
@@ -175,6 +177,7 @@ function addFunction_Callback(hObject, eventdata, handles)
             for i=1:size(input)
                 input{i} = str2num(input{i});
             end
+            plotDC(t,input{1});
         case 3%ramp
             prompt = {'Slope:','Shift:'};
             dlg_title = 'Ramp Wave Parameters';
@@ -182,7 +185,7 @@ function addFunction_Callback(hObject, eventdata, handles)
             for i=1:size(input)
                 input{i} = str2num(input{i});
             end
-            plotRamp(initTime,finTime,tstep,input{1},input{2})
+            plotRamp(t,input{1},input{2});
         case 4%expo
             prompt = {'Amplitude:','Exponent:'};
             dlg_title = 'Exponential Wave Parameters';
@@ -190,6 +193,7 @@ function addFunction_Callback(hObject, eventdata, handles)
             for i=1:size(input)
                 input{i} = str2num(input{i});
             end
+            plot_exp_con(t,input{1}, input{2});
         case 5%impulse
             prompt = {'Shift:'};
             dlg_title = 'Impulse Wave Parameters';
@@ -197,6 +201,7 @@ function addFunction_Callback(hObject, eventdata, handles)
             for i=1:size(input)
                 input{i} = str2num(input{i});
             end
+            plot_Impulse(t,input{1});
         case 6%unit
             prompt = {'Amplitude:','Shift:'};
             dlg_title = 'Unit Step Wave Parameters';
@@ -204,6 +209,7 @@ function addFunction_Callback(hObject, eventdata, handles)
             for i=1:size(input)
                 input{i} = str2num(input{i});
             end
+            plotUnitStep(t,input{1},input{2});
         case 7%rect
             prompt = {'Amplitude:','Shift:'};
             dlg_title = 'Rectangular Wave Parameters';
@@ -261,5 +267,21 @@ choice = questdlg('Are you sure you would like to quit ?', ...
 % --- Executes on button press in advancedoptions.
 function advancedoptions_Callback(hObject, eventdata, handles)
 % hObject    handle to advancedoptions (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes during object creation, after setting all properties.
+function axes1_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to axes1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: place code in OpeningFcn to populate axes1
+
+
+% --- Executes on mouse press over axes background.
+function axes1_ButtonDownFcn(hObject, eventdata, handles)
+% hObject    handle to axes1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)

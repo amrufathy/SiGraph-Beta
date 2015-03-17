@@ -211,12 +211,13 @@ function addFunction_Callback(hObject, eventdata, handles)
             end
             plotUnitStep(t,input{1},input{2});
         case 7%rect
-            prompt = {'Amplitude:','Shift:'};
+            prompt = {'Amplitude:','Shift:','Width:'};
             dlg_title = 'Rectangular Wave Parameters';
             input = inputdlg(prompt,dlg_title);
             for i=1:size(input)
                 input{i} = str2num(input{i});
             end
+            plotRect(t,input{1},input{2},input{3});
     end
 
 % --- Executes on key press with focus on addFunction and none of its controls.

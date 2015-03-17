@@ -172,26 +172,44 @@ function addFunction_Callback(hObject, eventdata, handles)
             prompt = {'Amplitude:'};
             dlg_title = 'DC Wave Parameters';
             input = inputdlg(prompt,dlg_title);
+            for i=1:size(input)
+                input{i} = str2num(input{i});
+            end
         case 3%ramp
             prompt = {'Slope:','Shift:'};
             dlg_title = 'Ramp Wave Parameters';
             input = inputdlg(prompt,dlg_title);
+            for i=1:size(input)
+                input{i} = str2num(input{i});
+            end
         case 4%expo
             prompt = {'Amplitude:','Exponent:'};
             dlg_title = 'Exponential Wave Parameters';
             input = inputdlg(prompt,dlg_title);
+            for i=1:size(input)
+                input{i} = str2num(input{i});
+            end
         case 5%impulse
             prompt = {'Shift:'};
             dlg_title = 'Impulse Wave Parameters';
             input = inputdlg(prompt,dlg_title);
+            for i=1:size(input)
+                input{i} = str2num(input{i});
+            end
         case 6%unit
             prompt = {'Amplitude:','Shift:'};
             dlg_title = 'Unit Step Wave Parameters';
             input = inputdlg(prompt,dlg_title);
+            for i=1:size(input)
+                input{i} = str2num(input{i});
+            end
         case 7%rect
             prompt = {'Amplitude:','Shift:'};
             dlg_title = 'Rectangular Wave Parameters';
             input = inputdlg(prompt,dlg_title);
+            for i=1:size(input)
+                input{i} = str2num(input{i});
+            end
     end
 
 % --- Executes on key press with focus on addFunction and none of its controls.

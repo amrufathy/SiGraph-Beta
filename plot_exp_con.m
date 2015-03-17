@@ -1,4 +1,5 @@
-function [] = plot_exp_con(t,Amp, Exp)
+function [] = plot_exp_con(t,A, Exp)
 figure;
-plot(t, Amp*exp(Exp));
+x = A * exp(Exp*t);
+plot(t, x);
 end

@@ -1,4 +1,5 @@
-function []= plot_exp_dis(t, Amp, Exp)
+function []= plot_exp_dis(t, A, Exp)
 figure;
-stem(t, Amp*exp(Exp));
+x = A * exp(Exp*t);
+stem(t, x);
 end

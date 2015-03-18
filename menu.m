@@ -22,7 +22,7 @@ function varargout = menu(varargin)
 
 % Edit the above text to modify the response to help menu
 
-% Last Modified by GUIDE v2.5 17-Mar-2015 21:19:38
+% Last Modified by GUIDE v2.5 18-Mar-2015 00:47:51
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -59,7 +59,7 @@ handles.output = hObject;
 guidata(hObject, handles);
 
 % UIWAIT makes menu wait for user response (see UIRESUME)
-% uiwait(handles.figure1);
+% uiwait(handles.menu);
 
 
 % --- Outputs from this function are returned to the command line.
@@ -284,5 +284,12 @@ function axes1_CreateFcn(hObject, eventdata, handles)
 % --- Executes on mouse press over axes background.
 function axes1_ButtonDownFcn(hObject, eventdata, handles)
 % hObject    handle to axes1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes when menu is resized.
+function menu_ResizeFcn(hObject, eventdata, handles)
+% hObject    handle to menu (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)

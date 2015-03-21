@@ -143,8 +143,11 @@ function addFunction_Callback(hObject, eventdata, handles)
 % hObject    handle to addFunction (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
     %set(hObject,'Enable','off') %turn off the button
+    
+    T = [];
+    X = [];
+    
     if (isempty(get(handles.initTime,'string')))
         warndlg('Please Enter Initial Time')
     else
@@ -169,7 +172,7 @@ function addFunction_Callback(hObject, eventdata, handles)
             for i=1:size(input)
                 input{i} = str2num(input{i});
             end
-            plotSine(t,input{1},input{2},input{3});
+            [t,x] = plotSine(t,input{1},input{2},input{3});
         case 2%dc
             prompt = {'Amplitude:'};
             dlg_title = 'DC Wave Parameters';
@@ -177,7 +180,7 @@ function addFunction_Callback(hObject, eventdata, handles)
             for i=1:size(input)
                 input{i} = str2num(input{i});
             end
-            plotDC(t,input{1});
+            [t,x] = plotDC(t,input{1});
         case 3%ramp
             prompt = {'Slope:','Shift:'};
             dlg_title = 'Ramp Wave Parameters';
@@ -185,7 +188,7 @@ function addFunction_Callback(hObject, eventdata, handles)
             for i=1:size(input)
                 input{i} = str2num(input{i});
             end
-            plotRamp(t,input{1},input{2});
+            [t,x] = plotRamp(t,input{1},input{2});
         case 4%expo
             prompt = {'Amplitude:','Exponent:'};
             dlg_title = 'Exponential Wave Parameters';
@@ -193,7 +196,7 @@ function addFunction_Callback(hObject, eventdata, handles)
             for i=1:size(input)
                 input{i} = str2num(input{i});
             end
-            plot_exp_con(t,input{1}, input{2});
+            [t,x] = plot_exp_con(t,input{1}, input{2});
         case 5%impulse
             prompt = {'Shift:'};
             dlg_title = 'Impulse Wave Parameters';
@@ -201,7 +204,7 @@ function addFunction_Callback(hObject, eventdata, handles)
             for i=1:size(input)
                 input{i} = str2num(input{i});
             end
-            plot_Impulse(t,input{1});
+            [t,x] = plot_Impulse(t,input{1});
         case 6%unit
             prompt = {'Amplitude:','Shift:'};
             dlg_title = 'Unit Step Wave Parameters';
@@ -209,7 +212,7 @@ function addFunction_Callback(hObject, eventdata, handles)
             for i=1:size(input)
                 input{i} = str2num(input{i});
             end
-            plotUnitStep(t,input{1},input{2});
+            [t,x] = plotUnitStep(t,input{1},input{2});
         case 7%rect
             prompt = {'Amplitude:','Shift:','Width:'};
             dlg_title = 'Rectangular Wave Parameters';
@@ -217,8 +220,16 @@ function addFunction_Callback(hObject, eventdata, handles)
             for i=1:size(input)
                 input{i} = str2num(input{i});
             end
-            plotRect(t,input{1},input{2},input{3});
+            [t,x] = plotRect(t,input{1},input{2},input{3});
     end
+    
+    T = [T,t];
+    X = [X,x];
+    plot(T,X,'LineWidth',3);
+    Ax = findall(0,'type','axes'); 
+    axis(Ax,[-inf,inf,-inf,inf]);
+
+    
 
 % --- Executes on key press with focus on addFunction and none of its controls.
 function addFunction_KeyPressFcn(hObject, eventdata, handles)

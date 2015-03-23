@@ -230,9 +230,6 @@ function addFunction_Callback(hObject, eventdata, handles)
     T = [T,t];
     X = [X,x];
     plot(T,X,'LineWidth',3);
-    Ax = findall(0,'type','axes'); 
-    axis(Ax,[-inf,inf,-inf,inf]);
-
     
 
 % --- Executes on key press with focus on addFunction and none of its controls.

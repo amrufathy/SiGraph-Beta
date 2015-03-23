@@ -145,8 +145,10 @@ function addFunction_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
     %set(hObject,'Enable','off') %turn off the button
     
-    T = [];
-    X = [];
+    global T;
+%     T = [];
+    global X;
+%     X = [];
     
     if (isempty(get(handles.initTime,'string')))
         warndlg('Please Enter Initial Time')
@@ -304,3 +306,4 @@ function menu_ResizeFcn(hObject, eventdata, handles)
 % hObject    handle to menu (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+

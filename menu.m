@@ -269,14 +269,11 @@ function quit_Callback(hObject, eventdata, handles)
 % hObject    handle to quit (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-global T;
-global X;
+
 choice = questdlg('Are you sure you would like to quit ?', ...
 	'Exit Dialogue', ...
 	'Yes','No','');
     if strcmp(choice,'Yes')
-        T = [];
-        X = [];
         close(gcf);
     end
 

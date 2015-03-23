@@ -55,6 +55,10 @@ function menu_OpeningFcn(hObject, eventdata, handles, varargin)
 % Choose default command line output for menu
 handles.output = hObject;
 
+global T;
+T = [];
+global X;
+X = [];
 % Update handles structure
 guidata(hObject, handles);
 
@@ -146,9 +150,7 @@ function addFunction_Callback(hObject, eventdata, handles)
     %set(hObject,'Enable','off') %turn off the button
     
     global T;
-%     T = [];
     global X;
-%     X = [];
     
     if (isempty(get(handles.initTime,'string')))
         warndlg('Please Enter Initial Time')

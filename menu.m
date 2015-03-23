@@ -22,7 +22,7 @@ function varargout = menu(varargin)
 
 % Edit the above text to modify the response to help menu
 
-% Last Modified by GUIDE v2.5 18-Mar-2015 00:47:51
+% Last Modified by GUIDE v2.5 24-Mar-2015 01:11:25
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -59,6 +59,7 @@ global T;
 T = [];
 global X;
 X = [];
+
 % Update handles structure
 guidata(hObject, handles);
 
@@ -278,11 +279,16 @@ choice = questdlg('Are you sure you would like to quit ?', ...
     end
 
 
-% --- Executes on button press in advancedoptions.
-function advancedoptions_Callback(hObject, eventdata, handles)
-% hObject    handle to advancedoptions (see GCBO)
+% --- Executes on button press in clear.
+function clear_Callback(hObject, eventdata, handles)
+% hObject    handle to clear (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+global T;
+T = [];
+global X;
+X = [];
+plot(T,X);
 
 
 % --- Executes during object creation, after setting all properties.

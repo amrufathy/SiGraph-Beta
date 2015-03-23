@@ -288,7 +288,7 @@ global T;
 T = [];
 global X;
 X = [];
-plot(T,X);
+cla;
 
 
 % --- Executes during object creation, after setting all properties.

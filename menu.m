@@ -162,70 +162,74 @@ function addFunction_Callback(hObject, eventdata, handles)
     else
         tstep = str2num(get(handles.stepTime,'string'));
     end
-    t = initTime:tstep:finTime;
-    switch(get(handles.listbox1,'value'))
-        case 1%sin       
-            prompt = {'Amplitude:','Frequency:','Angle Shift'};
-            dlg_title = 'Sinusoidal Wave Parameters';
-            input = inputdlg(prompt,dlg_title);
-            for i=1:size(input)
-                input{i} = str2num(input{i});
-            end
-            [t,x] = plotSine(t,input{1},input{2},input{3});
-        case 2%dc
-            prompt = {'Amplitude:'};
-            dlg_title = 'DC Wave Parameters';
-            input = inputdlg(prompt,dlg_title);
-            for i=1:size(input)
-                input{i} = str2num(input{i});
-            end
-            [t,x] = plotDC(t,input{1});
-        case 3%ramp
-            prompt = {'Slope:','Shift:'};
-            dlg_title = 'Ramp Wave Parameters';
-            input = inputdlg(prompt,dlg_title);
-            for i=1:size(input)
-                input{i} = str2num(input{i});
-            end
-            [t,x] = plotRamp(t,input{1},input{2});
-        case 4%expo
-            prompt = {'Amplitude:','Exponent:'};
-            dlg_title = 'Exponential Wave Parameters';
-            input = inputdlg(prompt,dlg_title);
-            for i=1:size(input)
-                input{i} = str2num(input{i});
-            end
-            [t,x] = plot_exp_con(t,input{1}, input{2});
-        case 5%impulse
-            prompt = {'Shift:'};
-            dlg_title = 'Impulse Wave Parameters';
-            input = inputdlg(prompt,dlg_title);
-            for i=1:size(input)
-                input{i} = str2num(input{i});
-            end
-            [t,x] = plot_Impulse(t,input{1});
-        case 6%unit
-            prompt = {'Amplitude:','Shift:'};
-            dlg_title = 'Unit Step Wave Parameters';
-            input = inputdlg(prompt,dlg_title);
-            for i=1:size(input)
-                input{i} = str2num(input{i});
-            end
-            [t,x] = plotUnitStep(t,input{1},input{2});
-        case 7%rect
-            prompt = {'Amplitude:','Shift:','Width:'};
-            dlg_title = 'Rectangular Wave Parameters';
-            input = inputdlg(prompt,dlg_title);
-            for i=1:size(input)
-                input{i} = str2num(input{i});
-            end
-            [t,x] = plotRect(t,input{1},input{2},input{3});
-    end
+    if(get(handles.initTime,'string') == get(handles.initTime,'max') && ...
+       get(handles.stepTime,'string') == get(handles.stepTime,'max') && ...
+       get(handles.finTime,'string') == get(handles.finTime,'max'))
+        t = initTime:tstep:finTime;
+        switch(get(handles.listbox1,'value'))
+            case 1 %sin       
+                prompt = {'Amplitude:','Frequency:','Angle Shift'};
+                dlg_title = 'Sinusoidal Wave Parameters';
+                input = inputdlg(prompt,dlg_title);
+                for i=1:size(input)
+                    input{i} = str2num(input{i});
+                end
+                [t,x] = plotSine(t,input{1},input{2},input{3});
+            case 2 %dc
+                prompt = {'Amplitude:'};
+                dlg_title = 'DC Wave Parameters';
+                input = inputdlg(prompt,dlg_title);
+                for i=1:size(input)
+                    input{i} = str2num(input{i});
+                end
+                [t,x] = plotDC(t,input{1});
+            case 3 %ramp
+                prompt = {'Slope:','Shift:'};
+                dlg_title = 'Ramp Wave Parameters';
+                input = inputdlg(prompt,dlg_title);
+                for i=1:size(input)
+                    input{i} = str2num(input{i});
+                end
+                [t,x] = plotRamp(t,input{1},input{2});
+            case 4 %expo
+                prompt = {'Amplitude:','Exponent:'};
+                dlg_title = 'Exponential Wave Parameters';
+                input = inputdlg(prompt,dlg_title);
+                for i=1:size(input)
+                    input{i} = str2num(input{i});
+                end
+                [t,x] = plotExp(t,input{1}, input{2});
+            case 5 %impulse
+                prompt = {'Shift:'};
+                dlg_title = 'Impulse Wave Parameters';
+                input = inputdlg(prompt,dlg_title);
+                for i=1:size(input)
+                    input{i} = str2num(input{i});
+                end
+                [t,x] = plotImpulse(t,input{1});
+            case 6 %unit
+                prompt = {'Amplitude:','Shift:'};
+                dlg_title = 'Unit Step Wave Parameters';
+                input = inputdlg(prompt,dlg_title);
+                for i=1:size(input)
+                    input{i} = str2num(input{i});
+                end
+                [t,x] = plotUnitStep(t,input{1},input{2});
+            case 7 %rect
+                prompt = {'Amplitude:','Shift:','Width:'};
+                dlg_title = 'Rectangular Wave Parameters';
+                input = inputdlg(prompt,dlg_title);
+                for i=1:size(input)
+                    input{i} = str2num(input{i});
+                end
+                [t,x] = plotRect(t,input{1},input{2},input{3});
+        end    
     
     T = [T,t];
     X = [X,x];
     plot(T,X,'LineWidth',3);
 %     stem(T,X,'LineWidth',3);
+    end
 
     
 % --- Executes on button press in quit.

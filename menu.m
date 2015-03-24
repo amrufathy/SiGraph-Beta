@@ -22,7 +22,7 @@ function varargout = menu(varargin)
 
 % Edit the above text to modify the response to help menu
 
-% Last Modified by GUIDE v2.5 24-Mar-2015 01:11:25
+% Last Modified by GUIDE v2.5 24-Mar-2015 01:54:54
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -66,7 +66,6 @@ guidata(hObject, handles);
 % UIWAIT makes menu wait for user response (see UIRESUME)
 % uiwait(handles.menu);
 
-
 % --- Outputs from this function are returned to the command line.
 function varargout = menu_OutputFcn(hObject, eventdata, handles) 
 % varargout  cell array for returning output args (see VARARGOUT);
@@ -76,7 +75,6 @@ function varargout = menu_OutputFcn(hObject, eventdata, handles)
 % Get default command line output from handles structure
 varargout{1} = handles.output;
 
-
 % --- Executes on selection change in listbox1.
 function listbox1_Callback(hObject, eventdata, handles)
 % hObject    handle to listbox1 (see GCBO)
@@ -85,7 +83,6 @@ function listbox1_Callback(hObject, eventdata, handles)
 
 % Hints: contents = cellstr(get(hObject,'String')) returns listbox1 contents as cell array
 %        contents{get(hObject,'Value')} returns selected item from listbox1
-
 
 % --- Executes during object creation, after setting all properties.
 function listbox1_CreateFcn(hObject, eventdata, handles)
@@ -107,7 +104,6 @@ function initTime_Callback(hObject, eventdata, handles)
 % Hints: get(hObject,'String') returns contents of initTime as text
 %        str2double(get(hObject,'String')) returns contents of initTime as a double
 
-
 % --- Executes during object creation, after setting all properties.
 function initTime_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to initTime (see GCBO)
@@ -120,7 +116,6 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
     set(hObject,'BackgroundColor','white');
 end
 
-
 function finTime_Callback(hObject, eventdata, handles)
 % hObject    handle to finTime (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -128,7 +123,6 @@ function finTime_Callback(hObject, eventdata, handles)
 
 % Hints: get(hObject,'String') returns contents of finTime as text
 %        str2double(get(hObject,'String')) returns contents of finTime as a double
-
 
 % --- Executes during object creation, after setting all properties.
 function finTime_CreateFcn(hObject, eventdata, handles)
@@ -231,40 +225,8 @@ function addFunction_Callback(hObject, eventdata, handles)
     T = [T,t];
     X = [X,x];
     plot(T,X,'LineWidth',3);
+
     
-
-% --- Executes on key press with focus on addFunction and none of its controls.
-function addFunction_KeyPressFcn(hObject, eventdata, handles)
-% hObject    handle to addFunction (see GCBO)
-% eventdata  structure with the following fields (see UICONTROL)
-%	Key: name of the key that was pressed, in lower case
-%	Character: character interpretation of the key(s) that was pressed
-%	Modifier: name(s) of the modifier key(s) (i.e., control, shift) pressed
-% handles    structure with handles and user data (see GUIDATA)
-
-
-function stepTime_Callback(hObject, eventdata, handles)
-% hObject    handle to stepTime (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'String') returns contents of stepTime as text
-%        str2double(get(hObject,'String')) returns contents of stepTime as a double
-
-
-% --- Executes during object creation, after setting all properties.
-function stepTime_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to stepTime (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: edit controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
-if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
-end
-
-
 % --- Executes on button press in quit.
 function quit_Callback(hObject, eventdata, handles)
 % hObject    handle to quit (see GCBO)
@@ -289,7 +251,36 @@ T = [];
 global X;
 X = [];
 cla;
+    
+    
+% --- Executes on key press with focus on addFunction and none of its controls.
+function addFunction_KeyPressFcn(hObject, eventdata, handles)
+% hObject    handle to addFunction (see GCBO)
+% eventdata  structure with the following fields (see UICONTROL)
+%	Key: name of the key that was pressed, in lower case
+%	Character: character interpretation of the key(s) that was pressed
+%	Modifier: name(s) of the modifier key(s) (i.e., control, shift) pressed
+% handles    structure with handles and user data (see GUIDATA)
 
+function stepTime_Callback(hObject, eventdata, handles)
+% hObject    handle to stepTime (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of stepTime as text
+%        str2double(get(hObject,'String')) returns contents of stepTime as a double
+
+% --- Executes during object creation, after setting all properties.
+function stepTime_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to stepTime (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
 
 % --- Executes during object creation, after setting all properties.
 function axes1_CreateFcn(hObject, eventdata, handles)
@@ -299,13 +290,11 @@ function axes1_CreateFcn(hObject, eventdata, handles)
 
 % Hint: place code in OpeningFcn to populate axes1
 
-
 % --- Executes on mouse press over axes background.
 function axes1_ButtonDownFcn(hObject, eventdata, handles)
 % hObject    handle to axes1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
 
 % --- Executes when menu is resized.
 function menu_ResizeFcn(hObject, eventdata, handles)

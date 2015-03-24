@@ -225,6 +225,7 @@ function addFunction_Callback(hObject, eventdata, handles)
     T = [T,t];
     X = [X,x];
     plot(T,X,'LineWidth',3);
+%     stem(T,X,'LineWidth',3);
 
     
 % --- Executes on button press in quit.

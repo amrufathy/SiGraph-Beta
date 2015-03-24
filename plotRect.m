@@ -1,5 +1,6 @@
-function [t,x] = plotRect(t,A,Shift,width)
-start = Shift - (width/2);
-finish = Shift + (width/2);
-x = [0,ones(1,length(t)-2)*A,0];
+function [t,x] = plotRect(t,A,shift,width)
+shift = shift + t(1);
+start = shift - (width/2);
+finish = shift + (width/2);
+x = A * rectangularPulse(start,finish,t);
 end

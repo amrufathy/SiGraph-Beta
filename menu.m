@@ -22,7 +22,7 @@ function varargout = menu(varargin)
 
 % Edit the above text to modify the response to help menu
 
-% Last Modified by GUIDE v2.5 27-Mar-2015 11:27:20
+% Last Modified by GUIDE v2.5 03-Apr-2015 23:06:13
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -59,7 +59,12 @@ global T;
 T = [];
 global X;
 X = [];
+global F;
+F = [];
+global Y;
+Y = [];
 set(handles.continuousbutton,'value',1);
+set(handles.timedomainbutton,'value',1);
 
 % Update handles structure
 guidata(hObject, handles);
@@ -77,18 +82,20 @@ function addFunction_Callback(hObject, eventdata, handles)
     
     global T;
     global X;
+    global F;
+    global Y;
     
-    if (~isempty(get(handles.initTime,'string')))
+    if( ~isempty(get(handles.initTime,'string')))
         initTime = str2num(get(handles.initTime,'string'));
     else
         warndlg('Please Enter Initial Time');
     end
-    if (~isempty(get(handles.finTime,'string')))
+    if( ~isempty(get(handles.finTime,'string')))
         finTime = str2num(get(handles.finTime,'string'));
     else
         warndlg('Please Enter Final Time');
     end
-    if (~isempty(get(handles.stepTime,'string')))
+    if( ~isempty(get(handles.stepTime,'string')))
         tstep = str2num(get(handles.stepTime,'string'));
     else
         warndlg('Please Enter Time Step');
@@ -166,14 +173,30 @@ function addFunction_Callback(hObject, eventdata, handles)
             T = [T,t];
             X = [X,x];
             
+            [F,Y] = timetofreq(T,X);
+            
             if(get(handles.continuousbutton,'value') == get(handles.continuousbutton,'max'))
                 set(handles.discretebutton,'value',0);
-                cla;
-                plot(T,X,'LineWidth',3);
+                if(get(handles.timedomainbutton,'value') == get(handles.timedomainbutton,'max'))
+                    set(handles.freqdomainbutton,'value',0);
+                    cla;
+                    plot(T,X,'LineWidth',3);
+                elseif(get(handles.freqdomainbutton,'value') == get(handles.freqdomainbutton,'max'))
+                    set(handles.timedomainbutton,'value',0);
+                    cla;
+                    plot(F,Y,'LineWidth',3);
+                end
             elseif(get(handles.discretebutton,'value') == get(handles.discretebutton,'max'))
                 set(handles.continuousbutton,'value',0);
-                cla;
-                stem(T,X,'LineWidth',3);
+                if(get(handles.timedomainbutton,'value') == get(handles.timedomainbutton,'max'))
+                    set(handles.freqdomainbutton,'value',0);
+                    cla;
+                    stem(T,X,'LineWidth',3);
+                elseif(get(handles.freqdomainbutton,'value') == get(handles.freqdomainbutton,'max'))
+                    set(handles.timedomainbutton,'value',0);
+                    cla;
+                    stem(F,Y,'LineWidth',3);
+                end
             end
             
      end
@@ -201,6 +224,10 @@ global T;
 T = [];
 global X;
 X = [];
+global F;
+F = [];
+global Y;
+Y = [];
 cla;
 
 
@@ -213,10 +240,19 @@ function continuousbutton_Callback(hObject, eventdata, handles)
 % Hint: get(hObject,'Value') returns toggle state of continuousbutton
 global T;
 global X;
+global F;
+global Y;
 if(get(hObject,'value') == get(hObject,'max'))
     set(handles.discretebutton,'value',0);
-    cla;
-    plot(T,X,'LineWidth',3);
+    if(get(handles.timedomainbutton,'value') == get(handles.timedomainbutton,'max'))
+        set(handles.freqdomainbutton,'value',0);
+        cla;
+        plot(T,X,'LineWidth',3);
+    elseif(get(handles.freqdomainbutton,'value') == get(handles.freqdomainbutton,'max'))
+        set(handles.timedomainbutton,'value',0);
+        cla;
+        plot(F,Y,'LineWidth',3);
+    end
 end
 
 
@@ -229,16 +265,71 @@ function discretebutton_Callback(hObject, eventdata, handles)
 % Hint: get(hObject,'Value') returns toggle state of discretebutton
 global T;
 global X;
+global F;
+global Y;
 if(get(hObject,'value') == get(hObject,'max'))
     set(handles.continuousbutton,'value',0);
-    cla;
-    stem(T,X,'LineWidth',3);
+    if(get(handles.timedomainbutton,'value') == get(handles.timedomainbutton,'max'))
+        set(handles.freqdomainbutton,'value',0);
+        cla;
+        stem(T,X,'LineWidth',3);
+    elseif(get(handles.freqdomainbutton,'value') == get(handles.freqdomainbutton,'max'))
+        set(handles.timedomainbutton,'value',0);
+        cla;
+        stem(F,Y,'LineWidth',3);
+    end
+end
+
+
+% --- Executes on button press in timedomainbutton.
+function timedomainbutton_Callback(hObject, eventdata, handles)
+% hObject    handle to timedomainbutton (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of timedomainbutton
+global T;
+global X;
+if(get(hObject,'value') == get(hObject,'max'))
+    set(handles.freqdomainbutton,'value',0);
+    if(get(handles.continuousbutton,'value') == get(handles.continuousbutton,'max'))
+        set(handles.discretebutton,'value',0);
+        cla;
+        plot(T,X,'LineWidth',3);
+    elseif(get(handles.discretebutton,'value') == get(handles.discretebutton,'max'))
+        set(handles.continuousbutton,'value',0);
+        cla;
+        stem(T,X,'LineWidth',3);
+    end
+end
+
+
+% --- Executes on button press in freqdomainbutton.
+function freqdomainbutton_Callback(hObject, eventdata, handles)
+% hObject    handle to freqdomainbutton (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of freqdomainbutton
+global F;
+global Y;
+if(get(hObject,'value') == get(hObject,'max'))
+    set(handles.timedomainbutton,'value',0);     
+    if(get(handles.continuousbutton,'value') == get(handles.continuousbutton,'max'))
+        set(handles.discretebutton,'value',0);
+        cla;
+        plot(F,Y,'LineWidth',3);
+    elseif(get(handles.discretebutton,'value') == get(handles.discretebutton,'max'))
+        set(handles.continuousbutton,'value',0);
+        cla;
+        stem(F,Y,'LineWidth',3);
+    end
 end
 
 
 % >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 % >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-% 				Don't mind the code below        فكك من الكود اللي تحت
+%                   Don't mind the code below
 % <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 % <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 

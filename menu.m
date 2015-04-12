@@ -27,11 +27,11 @@ function varargout = menu(varargin)
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
 gui_State = struct('gui_Name',       mfilename, ...
-                   'gui_Singleton',  gui_Singleton, ...
-                   'gui_OpeningFcn', @menu_OpeningFcn, ...
-                   'gui_OutputFcn',  @menu_OutputFcn, ...
-                   'gui_LayoutFcn',  [] , ...
-                   'gui_Callback',   []);
+    'gui_Singleton',  gui_Singleton, ...
+    'gui_OpeningFcn', @menu_OpeningFcn, ...
+    'gui_OutputFcn',  @menu_OutputFcn, ...
+    'gui_LayoutFcn',  [] , ...
+    'gui_Callback',   []);
 if nargin && ischar(varargin{1})
     gui_State.gui_Callback = str2func(varargin{1});
 end
@@ -78,141 +78,147 @@ function addFunction_Callback(hObject, eventdata, handles)
 % hObject    handle to addFunction (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-    %set(hObject,'Enable','off') %turn off the button
-    
-    global T;
-    global X;
-    global F;
-    global Y;
-    
-    if( ~isempty(get(handles.initTime,'string')))
-        initTime = str2num(get(handles.initTime,'string'));
-    else
-        warndlg('Please Enter Initial Time');
-    end
-    if( ~isempty(get(handles.finTime,'string')))
-        finTime = str2num(get(handles.finTime,'string'));
-    else
-        warndlg('Please Enter Final Time');
-    end
-    if( ~isempty(get(handles.stepTime,'string')))
-        tstep = str2num(get(handles.stepTime,'string'));
-    else
-        warndlg('Please Enter Time Step');
-    end
-    if( ~isempty(get(handles.initTime,'string')) && ...
-        ~isempty(get(handles.stepTime,'string')) && ...
-        ~isempty(get(handles.finTime,'string')))
-            t = initTime:tstep:finTime;
-            switch(get(handles.listbox1,'value'))
-                case 1 %sin       
-                    prompt = {'Amplitude:','Frequency:','Angle Shift'};
-                    dlg_title = 'Sinusoidal Wave Parameters';
-                    def = {'1','0.5','0'};
-                    input = inputdlg(prompt,dlg_title,1,def);
-                    for i=1:size(input)
-                        input{i} = str2num(input{i});
-                    end
-                    [t,x] = plotSine(t,input{1},input{2},input{3});
-                case 2 %dc
-                    prompt = {'Amplitude:'};
-                    dlg_title = 'DC Wave Parameters';
-                    def = {'1'};
-                    input = inputdlg(prompt,dlg_title,1,def);
-                    for i=1:size(input)
-                        input{i} = str2num(input{i});
-                    end
-                    [t,x] = plotDC(t,input{1});
-                case 3 %ramp
-                    prompt = {'Slope:','Shift:'};
-                    dlg_title = 'Ramp Wave Parameters';
-                    def = {'1','0'};
-                    input = inputdlg(prompt,dlg_title,1,def);
-                    for i=1:size(input)
-                        input{i} = str2num(input{i});
-                    end
-                    [t,x] = plotRamp(t,input{1},input{2});
-                case 4 %expo
-                    prompt = {'Amplitude:','Exponent:'};
-                    dlg_title = 'Exponential Wave Parameters';
-                    def = {'1','1'};
-                    input = inputdlg(prompt,dlg_title,1,def);
-                    for i=1:size(input)
-                        input{i} = str2num(input{i});
-                    end
-                    [t,x] = plotExp(t,input{1}, input{2});
-                case 5 %impulse
-                    prompt = {'Shift:'};
-                    dlg_title = 'Impulse Wave Parameters';
-                    def = {'0'};
-                    input = inputdlg(prompt,dlg_title,1,def);
-                    for i=1:size(input)
-                        input{i} = str2num(input{i});
-                    end
-                    [t,x] = plotImpulse(t,input{1});
-                case 6 %unit
-                    prompt = {'Amplitude:','Shift:'};
-                    dlg_title = 'Unit Step Wave Parameters';
-                    def = {'1','0'};
-                    input = inputdlg(prompt,dlg_title,1,def);
-                    for i=1:size(input)
-                        input{i} = str2num(input{i});
-                    end
-                    [t,x] = plotUnitStep(t,input{1},input{2});
-                case 7 %rect
-                    prompt = {'Amplitude:','Shift:','Width:'};
-                    dlg_title = 'Rectangular Wave Parameters';
-                    def = {'1','0','1'};
-                    input = inputdlg(prompt,dlg_title,1,def);
-                    for i=1:size(input)
-                        input{i} = str2num(input{i});
-                    end
-                    [t,x] = plotRect(t,input{1},input{2},input{3});
-            end    
-            
-            T = [T,t];
-            X = [X,x];
-            
-            [F,Y] = timetofreq(T,X);
-            
-            if(get(handles.continuousbutton,'value') == get(handles.continuousbutton,'max'))
-                set(handles.discretebutton,'value',0);
-                if(get(handles.timedomainbutton,'value') == get(handles.timedomainbutton,'max'))
-                    set(handles.freqdomainbutton,'value',0);
-                    cla;
-                    plot(T,X,'LineWidth',3);
-                elseif(get(handles.freqdomainbutton,'value') == get(handles.freqdomainbutton,'max'))
-                    set(handles.timedomainbutton,'value',0);
-                    cla;
-                    plot(F,Y,'LineWidth',3);
-                end
-            elseif(get(handles.discretebutton,'value') == get(handles.discretebutton,'max'))
-                set(handles.continuousbutton,'value',0);
-                if(get(handles.timedomainbutton,'value') == get(handles.timedomainbutton,'max'))
-                    set(handles.freqdomainbutton,'value',0);
-                    cla;
-                    stem(T,X,'LineWidth',3);
-                elseif(get(handles.freqdomainbutton,'value') == get(handles.freqdomainbutton,'max'))
-                    set(handles.timedomainbutton,'value',0);
-                    cla;
-                    stem(F,Y,'LineWidth',3);
-                end
-            end
-            
-     end
+%set(hObject,'Enable','off') %turn off the button
 
-    
+global T;
+global X;
+global F;
+global Y;
+if( ~isempty(get(handles.initTime,'string')))
+    initTime = str2num(get(handles.initTime,'string'));
+else
+    warndlg('Please Enter Initial Time');
+    return;
+end
+if( ~isempty(get(handles.finTime,'string')))
+    finTime = str2num(get(handles.finTime,'string'));    
+else
+    warndlg('Please Enter Final Time');
+    return;
+end
+if( ~isempty(get(handles.stepTime,'string')))
+    tstep = str2num(get(handles.stepTime,'string'));
+else
+    warndlg('Please Enter Time Step');
+    return;
+end
+if(finTime==initTime)    
+end
+if(tstep==0)
+    warndlg('Time Step Must Be Larger Than Zero');
+    return;
+end
+
+%Real Work
+t = initTime:tstep:finTime;
+switch(get(handles.listbox1,'value'))
+    case 1 %sin
+        prompt = {'Amplitude:','Frequency:','Angle Shift'};
+        dlg_title = 'Sinusoidal Wave Parameters';
+        def = {'1','0.5','0'};
+        input = inputdlg(prompt,dlg_title,1,def);
+        for i=1:size(input)
+            input{i} = str2num(input{i});
+        end
+        [t,x] = plotSine(t,input{1},input{2},input{3});
+    case 2 %dc
+        prompt = {'Amplitude:'};
+        dlg_title = 'DC Wave Parameters';
+        def = {'1'};
+        input = inputdlg(prompt,dlg_title,1,def);
+        for i=1:size(input)
+            input{i} = str2num(input{i});
+        end
+        [t,x] = plotDC(t,input{1});
+    case 3 %ramp
+        prompt = {'Slope:','Shift:'};
+        dlg_title = 'Ramp Wave Parameters';
+        def = {'1','0'};
+        input = inputdlg(prompt,dlg_title,1,def);
+        for i=1:size(input)
+            input{i} = str2num(input{i});
+        end
+        [t,x] = plotRamp(t,input{1},input{2});
+    case 4 %expo
+        prompt = {'Amplitude:','Exponent:'};
+        dlg_title = 'Exponential Wave Parameters';
+        def = {'1','1'};
+        input = inputdlg(prompt,dlg_title,1,def);
+        for i=1:size(input)
+            input{i} = str2num(input{i});
+        end
+        [t,x] = plotExp(t,input{1}, input{2});
+    case 5 %impulse        
+        prompt = {'Shift:'};
+        dlg_title = 'Impulse Wave Parameters';
+        def = {'0'};
+        input = inputdlg(prompt,dlg_title,1,def);
+        for i=1:size(input)
+            input{i} = str2num(input{i});
+        end
+        [t,x] = plotImpulse(t,input{1});
+    case 6 %unit
+        prompt = {'Amplitude:','Shift:'};
+        dlg_title = 'Unit Step Wave Parameters';
+        def = {'1','0'};
+        input = inputdlg(prompt,dlg_title,1,def);
+        for i=1:size(input)
+            input{i} = str2num(input{i});
+        end
+        [t,x] = plotUnitStep(t,input{1},input{2});
+    case 7 %rect
+        prompt = {'Amplitude:','Shift:','Width:'};
+        dlg_title = 'Rectangular Wave Parameters';
+        def = {'1','0','1'};
+        input = inputdlg(prompt,dlg_title,1,def);
+        for i=1:size(input)
+            input{i} = str2num(input{i});
+        end
+        [t,x] = plotRect(t,input{1},input{2},input{3});
+end
+
+T = [T,t];
+X = [X,x];
+
+[F,Y] = timetofreq(T,X);
+
+if(get(handles.continuousbutton,'value') == get(handles.continuousbutton,'max'))
+    set(handles.discretebutton,'value',0);
+    if(get(handles.timedomainbutton,'value') == get(handles.timedomainbutton,'max'))
+        set(handles.freqdomainbutton,'value',0);
+        cla;
+        plot(T,X,'LineWidth',3);
+    elseif(get(handles.freqdomainbutton,'value') == get(handles.freqdomainbutton,'max'))
+        set(handles.timedomainbutton,'value',0);
+        cla;
+        plot(F,Y,'LineWidth',3);
+    end
+elseif(get(handles.discretebutton,'value') == get(handles.discretebutton,'max'))
+    set(handles.continuousbutton,'value',0);
+    if(get(handles.timedomainbutton,'value') == get(handles.timedomainbutton,'max'))
+        set(handles.freqdomainbutton,'value',0);
+        cla;
+        stem(T,X,'LineWidth',3);
+    elseif(get(handles.freqdomainbutton,'value') == get(handles.freqdomainbutton,'max'))
+        set(handles.timedomainbutton,'value',0);
+        cla;
+        stem(F,Y,'LineWidth',3);
+    end
+end
+
+
+
 % --- Executes on button press in quit.
 function quit_Callback(hObject, eventdata, handles)
 % hObject    handle to quit (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 choice = questdlg('Are you sure you would like to quit ?', ...
-	'Exit Dialogue', ...
-	'Yes','No','');
-    if strcmp(choice,'Yes')
-        close(gcf);
-    end
+    'Exit Dialogue', ...
+    'Yes','No','');
+if strcmp(choice,'Yes')
+    close(gcf);
+end
 
 
 % --- Executes on button press in clear.
@@ -314,7 +320,7 @@ function freqdomainbutton_Callback(hObject, eventdata, handles)
 global F;
 global Y;
 if(get(hObject,'value') == get(hObject,'max'))
-    set(handles.timedomainbutton,'value',0);     
+    set(handles.timedomainbutton,'value',0);
     if(get(handles.continuousbutton,'value') == get(handles.continuousbutton,'max'))
         set(handles.discretebutton,'value',0);
         cla;
@@ -335,7 +341,7 @@ end
 
 
 % --- Outputs from this function are returned to the command line.
-function varargout = menu_OutputFcn(hObject, eventdata, handles) 
+function varargout = menu_OutputFcn(hObject, eventdata, handles)
 % varargout  cell array for returning output args (see VARARGOUT);
 % hObject    handle to figure
 % eventdata  reserved - to be defined in a future version of MATLAB

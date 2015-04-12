@@ -22,7 +22,7 @@ function varargout = menu(varargin)
 
 % Edit the above text to modify the response to help menu
 
-% Last Modified by GUIDE v2.5 12-Apr-2015 21:20:25
+% Last Modified by GUIDE v2.5 12-Apr-2015 21:42:24
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -280,6 +280,8 @@ if(get(hObject,'value') == get(hObject,'max'))
         cla;
         plot(F,Y,'LineWidth',3);
     end
+else
+    set(hObject,'value',1);
 end
 
 
@@ -305,6 +307,8 @@ if(get(hObject,'value') == get(hObject,'max'))
         cla;
         stem(F,Y,'LineWidth',3);
     end
+else
+    set(hObject,'value',1);
 end
 
 
@@ -328,6 +332,8 @@ if(get(hObject,'value') == get(hObject,'max'))
         cla;
         stem(T,X,'LineWidth',3);
     end
+else
+    set(hObject,'value',1);
 end
 
 
@@ -351,6 +357,8 @@ if(get(hObject,'value') == get(hObject,'max'))
         cla;
         stem(F,Y,'LineWidth',3);
     end
+else
+    set(hObject,'value',1);
 end
 
 

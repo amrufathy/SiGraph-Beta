@@ -22,7 +22,7 @@ function varargout = menu(varargin)
 
 % Edit the above text to modify the response to help menu
 
-% Last Modified by GUIDE v2.5 03-Apr-2015 23:06:13
+% Last Modified by GUIDE v2.5 12-Apr-2015 21:20:25
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -356,7 +356,7 @@ end
 
 % >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 % >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-%                   Don't mind the code below
+%                                                    Auto generated Code
 % <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 % <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
@@ -370,23 +370,6 @@ function varargout = menu_OutputFcn(hObject, eventdata, handles)
 % Get default command line output from handles structure
 varargout{1} = handles.output;
 
-% --- Executes when menu is resized.
-function menu_ResizeFcn(hObject, eventdata, handles)
-% hObject    handle to menu (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-
-% --- Executes on selection change in listbox1.
-function listbox1_Callback(hObject, eventdata, handles)
-% hObject    handle to listbox1 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: contents = cellstr(get(hObject,'String')) returns listbox1 contents as cell array
-%        contents{get(hObject,'Value')} returns selected item from listbox1
-
-% --- Executes during object creation, after setting all properties.
 function listbox1_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to listbox1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -397,16 +380,6 @@ function listbox1_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
-
-function initTime_Callback(hObject, eventdata, handles)
-% hObject    handle to initTime (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'String') returns contents of initTime as text
-%        str2double(get(hObject,'String')) returns contents of initTime as a double
-
-% --- Executes during object creation, after setting all properties.
 function initTime_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to initTime (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -418,15 +391,6 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
     set(hObject,'BackgroundColor','white');
 end
 
-function finTime_Callback(hObject, eventdata, handles)
-% hObject    handle to finTime (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'String') returns contents of finTime as text
-%        str2double(get(hObject,'String')) returns contents of finTime as a double
-
-% --- Executes during object creation, after setting all properties.
 function finTime_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to finTime (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -438,24 +402,6 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
     set(hObject,'BackgroundColor','white');
 end
 
-% --- Executes on key press with focus on addFunction and none of its controls.
-function addFunction_KeyPressFcn(hObject, eventdata, handles)
-% hObject    handle to addFunction (see GCBO)
-% eventdata  structure with the following fields (see UICONTROL)
-%	Key: name of the key that was pressed, in lower case
-%	Character: character interpretation of the key(s) that was pressed
-%	Modifier: name(s) of the modifier key(s) (i.e., control, shift) pressed
-% handles    structure with handles and user data (see GUIDATA)
-
-function stepTime_Callback(hObject, eventdata, handles)
-% hObject    handle to stepTime (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'String') returns contents of stepTime as text
-%        str2double(get(hObject,'String')) returns contents of stepTime as a double
-
-% --- Executes during object creation, after setting all properties.
 function stepTime_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to stepTime (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -474,9 +420,3 @@ function axes1_CreateFcn(hObject, eventdata, handles)
 % handles    empty - handles not created until after all CreateFcns called
 
 % Hint: place code in OpeningFcn to populate axes1
-
-% --- Executes on mouse press over axes background.
-function axes1_ButtonDownFcn(hObject, eventdata, handles)
-% hObject    handle to axes1 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)

@@ -117,6 +117,9 @@ switch(get(handles.listbox1,'value'))
         dlg_title = 'Sinusoidal Wave Parameters';
         def = {'1','0.5','0'};
         input = inputdlg(prompt,dlg_title,1,def);
+        if(length(input)==0)
+            return;
+        end
         for i=1:size(input)
             input{i} = str2num(input{i});
         end
@@ -126,6 +129,9 @@ switch(get(handles.listbox1,'value'))
         dlg_title = 'DC Wave Parameters';
         def = {'1'};
         input = inputdlg(prompt,dlg_title,1,def);
+        if(length(input)==0)
+            return;
+        end
         for i=1:size(input)
             input{i} = str2num(input{i});
         end
@@ -135,6 +141,9 @@ switch(get(handles.listbox1,'value'))
         dlg_title = 'Ramp Wave Parameters';
         def = {'1','0'};
         input = inputdlg(prompt,dlg_title,1,def);
+        if(length(input)==0)
+            return;
+        end
         for i=1:size(input)
             input{i} = str2num(input{i});
         end
@@ -144,6 +153,9 @@ switch(get(handles.listbox1,'value'))
         dlg_title = 'Exponential Wave Parameters';
         def = {'1','1'};
         input = inputdlg(prompt,dlg_title,1,def);
+        if(length(input)==0)
+            return;
+        end
         for i=1:size(input)
             input{i} = str2num(input{i});
         end
@@ -153,6 +165,9 @@ switch(get(handles.listbox1,'value'))
         dlg_title = 'Impulse Wave Parameters';
         def = {'0'};
         input = inputdlg(prompt,dlg_title,1,def);
+        if(length(input)==0)
+            return;
+        end
         for i=1:size(input)
             input{i} = str2num(input{i});
         end
@@ -162,6 +177,9 @@ switch(get(handles.listbox1,'value'))
         dlg_title = 'Unit Step Wave Parameters';
         def = {'1','0'};
         input = inputdlg(prompt,dlg_title,1,def);
+        if(length(input)==0)
+            return;
+        end
         for i=1:size(input)
             input{i} = str2num(input{i});
         end
@@ -171,6 +189,9 @@ switch(get(handles.listbox1,'value'))
         dlg_title = 'Rectangular Wave Parameters';
         def = {'1','0','1'};
         input = inputdlg(prompt,dlg_title,1,def);
+        if(length(input)==0)
+            return;
+        end
         for i=1:size(input)
             input{i} = str2num(input{i});
         end

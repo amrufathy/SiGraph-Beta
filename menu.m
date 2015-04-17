@@ -201,6 +201,7 @@ global BreakPoints;
 BreakPoints=BreakPoints-1;
 if(BreakPoints <= 0)    
     set(handles.commitbutton,'Enable','on');
+    set(handles.brkpn,'Enable','on');
     set(handles.addFunction,'Enable','off');
 end
 
@@ -362,7 +363,6 @@ global Y;
 Y = [];
 cla;
 
-
 % --- Executes on button press in clear.
 function clear_Callback(hObject, eventdata, handles)
 % hObject    handle to clear (see GCBO)
@@ -370,6 +370,7 @@ function clear_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 clear();
 set(handles.commitbutton,'Enable','on');
+set(handles.brkpn,'Enable','on');
 set(handles.addFunction,'Enable','off');
 
 % --- Executes on button press in commitbutton.
@@ -380,6 +381,7 @@ function commitbutton_Callback(hObject, eventdata, handles)
 global BreakPoints;
 BreakPoints = str2num(get(handles.brkpn,'string'));
 set(handles.commitbutton,'Enable','off');
+set(handles.brkpn,'Enable','off');
 set(handles.addFunction,'Enable','on');
 clear();
 

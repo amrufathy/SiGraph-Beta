@@ -22,7 +22,7 @@ function varargout = menu(varargin)
 
 % Edit the above text to modify the response to help menu
 
-% Last Modified by GUIDE v2.5 17-Apr-2015 19:11:22
+% Last Modified by GUIDE v2.5 17-Apr-2015 20:26:22
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -200,7 +200,7 @@ end
 global BreakPoints;
 BreakPoints=BreakPoints-1;
 if(BreakPoints <= 0)    
-    set(handles.commitbutton,'Enable','on');
+    set(handles.setbutton,'Enable','on');
     set(handles.brkpn,'Enable','on');
     set(handles.addFunction,'Enable','off');
 end
@@ -369,18 +369,18 @@ function clear_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 clear();
-set(handles.commitbutton,'Enable','on');
+set(handles.setbutton,'Enable','on');
 set(handles.brkpn,'Enable','on');
 set(handles.addFunction,'Enable','off');
 
-% --- Executes on button press in commitbutton.
-function commitbutton_Callback(hObject, eventdata, handles)
-% hObject    handle to commitbutton (see GCBO)
+% --- Executes on button press in setbutton.
+function setbutton_Callback(hObject, eventdata, handles)
+% hObject    handle to setbutton (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 global BreakPoints;
 BreakPoints = str2num(get(handles.brkpn,'string'));
-set(handles.commitbutton,'Enable','off');
+set(handles.setbutton,'Enable','off');
 set(handles.brkpn,'Enable','off');
 set(handles.addFunction,'Enable','on');
 clear();

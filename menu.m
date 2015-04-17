@@ -22,7 +22,7 @@ function varargout = menu(varargin)
 
 % Edit the above text to modify the response to help menu
 
-% Last Modified by GUIDE v2.5 17-Apr-2015 16:55:14
+% Last Modified by GUIDE v2.5 17-Apr-2015 19:11:22
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -42,16 +42,7 @@ else
     gui_mainfcn(gui_State, varargin{:});
 end
 % End initialization code - DO NOT EDIT
-function clear()
-global T;
-T = [];
-global X;
-X = [];
-global F;
-F = [];
-global Y;
-Y = [];
-cla;
+
 % --- Executes just before menu is made visible.
 function menu_OpeningFcn(hObject, eventdata, handles, varargin)
 % This function has no output args, see OutputFcn.
@@ -209,7 +200,7 @@ end
 global BreakPoints;
 BreakPoints=BreakPoints-1;
 if(BreakPoints <= 0)    
-    set(handles.combtn,'Enable','on');
+    set(handles.commitbutton,'Enable','on');
     set(handles.addFunction,'Enable','off');
 end
 
@@ -255,14 +246,6 @@ choice = questdlg('Are you sure you would like to quit ?', ...
 if strcmp(choice,'Yes')
     close(gcf);
 end
-
-
-% --- Executes on button press in clear.
-function clear_Callback(hObject, eventdata, handles)
-% hObject    handle to clear (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-clear();
 
 
 % --- Executes on button press in continuousbutton.
@@ -368,6 +351,37 @@ else
     set(hObject,'value',1);
 end
 
+function clear()
+global T;
+T = [];
+global X;
+X = [];
+global F;
+F = [];
+global Y;
+Y = [];
+cla;
+
+
+% --- Executes on button press in clear.
+function clear_Callback(hObject, eventdata, handles)
+% hObject    handle to clear (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+clear();
+set(handles.commitbutton,'Enable','on');
+set(handles.addFunction,'Enable','off');
+
+% --- Executes on button press in commitbutton.
+function commitbutton_Callback(hObject, eventdata, handles)
+% hObject    handle to commitbutton (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global BreakPoints;
+BreakPoints = str2num(get(handles.brkpn,'string'));
+set(handles.commitbutton,'Enable','off');
+set(handles.addFunction,'Enable','on');
+clear();
 
 % >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 % >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -436,17 +450,6 @@ function axes1_CreateFcn(hObject, eventdata, handles)
 
 % Hint: place code in OpeningFcn to populate axes1
 
-
-% --- Executes on button press in combtn.
-function combtn_Callback(hObject, eventdata, handles)
-% hObject    handle to combtn (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-global BreakPoints;
-BreakPoints = str2num(get(handles.brkpn,'string'));
-set(handles.combtn,'Enable','off');
-set(handles.addFunction,'Enable','on');
-clear();
 
 function brkpn_Callback(hObject, eventdata, handles)
 % hObject    handle to brkpn (see GCBO)

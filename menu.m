@@ -22,7 +22,7 @@ function varargout = menu(varargin)
 
 % Edit the above text to modify the response to help menu
 
-% Last Modified by GUIDE v2.5 12-Apr-2015 21:42:24
+% Last Modified by GUIDE v2.5 17-Apr-2015 16:55:14
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -42,8 +42,16 @@ else
     gui_mainfcn(gui_State, varargin{:});
 end
 % End initialization code - DO NOT EDIT
-
-
+function clear()
+global T;
+T = [];
+global X;
+X = [];
+global F;
+F = [];
+global Y;
+Y = [];
+cla;
 % --- Executes just before menu is made visible.
 function menu_OpeningFcn(hObject, eventdata, handles, varargin)
 % This function has no output args, see OutputFcn.
@@ -84,6 +92,7 @@ global T;
 global X;
 global F;
 global Y;
+
 if( ~isempty(get(handles.initTime,'string')))
     initTime = str2num(get(handles.initTime,'string'));
 else
@@ -197,6 +206,12 @@ switch(get(handles.listbox1,'value'))
         end
         [t,x] = plotRect(t,input{1},input{2},input{3});
 end
+global BreakPoints;
+BreakPoints=BreakPoints-1;
+if(BreakPoints <= 0)    
+    set(handles.combtn,'Enable','on');
+    set(handles.addFunction,'Enable','off');
+end
 
 T = [T,t];
 X = [X,x];
@@ -247,15 +262,7 @@ function clear_Callback(hObject, eventdata, handles)
 % hObject    handle to clear (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-global T;
-T = [];
-global X;
-X = [];
-global F;
-F = [];
-global Y;
-Y = [];
-cla;
+clear();
 
 
 % --- Executes on button press in continuousbutton.
@@ -428,3 +435,36 @@ function axes1_CreateFcn(hObject, eventdata, handles)
 % handles    empty - handles not created until after all CreateFcns called
 
 % Hint: place code in OpeningFcn to populate axes1
+
+
+% --- Executes on button press in combtn.
+function combtn_Callback(hObject, eventdata, handles)
+% hObject    handle to combtn (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global BreakPoints;
+BreakPoints = str2num(get(handles.brkpn,'string'));
+set(handles.combtn,'Enable','off');
+set(handles.addFunction,'Enable','on');
+clear();
+
+function brkpn_Callback(hObject, eventdata, handles)
+% hObject    handle to brkpn (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of brkpn as text
+%        str2double(get(hObject,'String')) returns contents of brkpn as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function brkpn_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to brkpn (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end

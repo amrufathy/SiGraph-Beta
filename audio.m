@@ -31,5 +31,5 @@ fOut = filter(b, a, fIn) * 10;
 % xlim([0,10000]);
 
 %% Play new signal
-% sound(fOut,fs);
+sound(fOut,fs);
 % audiowrite('female.wav',fOut,fs);

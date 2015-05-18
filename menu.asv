@@ -72,8 +72,8 @@ function addFunction_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 %set(hObject,'Enable','off') %turn off the button
 
-global T1; global T2; global T3; global T4; global T5;
-global X1; global X2; global X3; global X4; global X5;
+global T1; global T2;
+global X1; global X2;
 global F;
 global Y;
 
@@ -192,8 +192,6 @@ switch(get(handles.listbox1,'value'))
         end
         [t,x] = plotRect(t,input{1},input{2},input{3});
 end
-global BreakPoints;
-BreakPoints=BreakPoints-1;
 
 if(get(handles.opmenu,'value')==1)
                 T1 = [T1,t];
@@ -204,18 +202,20 @@ X1 = [X1,x];
 X2 = [X2,x];
 [F,Y] = timetofreq(T2,X2);
 end
-
+global BreakPoints;
+BreakPoints=BreakPoints-1;
 if(BreakPoints <= 0)
     switch(get(handles.opmenu,'value'))
             case 2
-                [T1 X1]=add(T1,X1,T2,X2);
+                [T1 X1]=add(T1,X1,T2,X2,tstep);
             case 3
-                [T1 X1]=add(T1,X1,T2,X2);
+                [T1 X1]=add(T1,X1,T2,-X2,tstep);
             case 4
-                [T1 X1]=add(T1,X1,T2,X2);
+                [T1 X1]=multiply(T1,X1,T2,X2,tstep);
             case 5
-                plot(T5,X5,'LineWidth',3);
-        end
+                [T1 X1]=convolve(T1,X1,T2,X2);
+    end
+        T2=[];X2=[];
     set(handles.setbutton,'Enable','on');
     set(handles.brkpn,'Enable','on');
     set(handles.addFunction,'Enable','off');
@@ -253,7 +253,7 @@ elseif(get(handles.discretebutton,'value') == get(handles.discretebutton,'max'))
         stem(F,Y,'LineWidth',3);
     end
 end
-
+set(handles.initTime,'string',get(handles.finTime,'string'));
 
 
 % --- Executes on button press in quit.
@@ -276,8 +276,8 @@ function continuousbutton_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 % Hint: get(hObject,'Value') returns toggle state of continuousbutton
-global T1; global T2; global T3; global T4; global T5;
-global X1; global X2; global X3; global X4; global X5;
+global T1;
+global X1;
 global F;
 global Y;
 if(get(hObject,'value') == get(hObject,'max'))
@@ -285,17 +285,10 @@ if(get(hObject,'value') == get(hObject,'max'))
     if(get(handles.timedomainbutton,'value') == get(handles.timedomainbutton,'max'))
         set(handles.freqdomainbutton,'value',0);
         cla;
-        switch(get(handles.opmenu,'value'))
-            case 1
+        if(get(handles.opmenu,'value')==1 || BreakPoints <= 0)
                 plot(T1,X1,'LineWidth',3);
-            case 2
+        else
                 plot(T2,X2,'LineWidth',3);
-            case 3
-                plot(T3,X3,'LineWidth',3);
-            case 4
-                plot(T4,X4,'LineWidth',3);
-            case 5
-                plot(T5,X5,'LineWidth',3);
         end
     elseif(get(handles.freqdomainbutton,'value') == get(handles.freqdomainbutton,'max'))
         set(handles.timedomainbutton,'value',0);
@@ -314,8 +307,8 @@ function discretebutton_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 % Hint: get(hObject,'Value') returns toggle state of discretebutton
-global T1; global T2; global T3; global T4; global T5;
-global X1; global X2; global X3; global X4; global X5;
+global T1; global T2;
+global X1; global X2;
 global F;
 global Y;
 if(get(hObject,'value') == get(hObject,'max'))
@@ -323,17 +316,10 @@ if(get(hObject,'value') == get(hObject,'max'))
     if(get(handles.timedomainbutton,'value') == get(handles.timedomainbutton,'max'))
         set(handles.freqdomainbutton,'value',0);
         cla;
-        switch(get(handles.opmenu,'value'))
-            case 1
+        if(get(handles.opmenu,'value')==1 || BreakPoints <= 0)
                 stem(T1,X1,'LineWidth',3);
-            case 2
+        else
                 stem(T2,X2,'LineWidth',3);
-            case 3
-                stem(T3,X3,'LineWidth',3);
-            case 4
-                stem(T4,X4,'LineWidth',3);
-            case 5
-                stem(T5,X5,'LineWidth',3);
         end
     elseif(get(handles.freqdomainbutton,'value') == get(handles.freqdomainbutton,'max'))
         set(handles.timedomainbutton,'value',0);
@@ -395,10 +381,10 @@ else
 end
 
 function clear()
-global T1; global T2; global T3; global T4; global T5;
-global X1; global X2; global X3; global X4; global X5;
-T1 = []; T2 = []; T3 = []; T4 = 1; T5 = [];
-X1 = []; X2 = 0; X3 = 0; X4 = 1; X5 = [];
+global T1; global T2;
+global X1; global X2;
+T1 = []; T2 = [];
+X1 = []; X2 = [];
 global F;
 F = [];
 global Y;
@@ -413,6 +399,7 @@ function clear_Callback(hObject, eventdata, handles)
 clear();
 set(handles.setbutton,'Enable','on');
 set(handles.brkpn,'Enable','on');
+set(handles.opmenu,'Enable','on');
 set(handles.addFunction,'Enable','off');
 
 % --- Executes on button press in setbutton.
@@ -420,13 +407,18 @@ function setbutton_Callback(hObject, eventdata, handles)
 % hObject    handle to setbutton (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+if(get(handles.opmenu,'value')==1)
+clear();
+else
+    
+end
 global BreakPoints;
 BreakPoints = str2num(get(handles.brkpn,'string'));
 set(handles.setbutton,'Enable','off');
 set(handles.brkpn,'Enable','off');
 set(handles.addFunction,'Enable','on');
-set(handles.opmenupa,'Enable','off');
-clear();
+set(handles.opmenu,'Enable','off');
+set(handles.initTime,'string',0);
 
 % --- Executes on selection change in opmenu.
 function opmenu_Callback(hObject, eventdata, handles)
@@ -436,24 +428,6 @@ function opmenu_Callback(hObject, eventdata, handles)
 
 % Hints: contents = cellstr(get(hObject,'String')) returns opmenu contents as cell array
 %        contents{get(hObject,'Value')} returns selected item from opmenu
-global T1; global T2; global T3; global T4; global T5;
-global X1; global X2; global X3; global X4; global X5;
-switch(get(hObject,'value'))
-    case 1 %concatenate
-        cla;
-        plot(T1,X1,'LineWidth',3);
-    case 2 %add
-        cla;
-        plot(T2,X2,'LineWidth',3);
-    case 3 %'subtract'
-        cla;
-        plot(T3,X3,'LineWidth',3);
-    case 4 %'multiply'
-        cla;
-        plot(T4,X4,'LineWidth',3);
-    case 5 %'convolute'
-        warndlg('Convolute')
-end
 
 
 % >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

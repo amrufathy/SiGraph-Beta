@@ -213,7 +213,7 @@ if(BreakPoints <= 0)
             case 4
                 [T1 X1]=multiply(T1,X1,T2,X2,tstep);
             case 5
-                [T1 X1]=convolute(T1,X1,T2,X2);
+                [T1 X1]=convolve(T1,X1,T2,X2);
     end
         T2=[];X2=[];
     set(handles.setbutton,'Enable','on');
@@ -407,6 +407,15 @@ function setbutton_Callback(hObject, eventdata, handles)
 % hObject    handle to setbutton (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+if(get(handles.opmenu,'value')==1)
+clear();
+else
+    global T1;
+    if(isempty(T1))
+        warndlg('Cannot perform operation. Please provide a base function.');
+        return;
+    end
+end
 global BreakPoints;
 BreakPoints = str2num(get(handles.brkpn,'string'));
 set(handles.setbutton,'Enable','off');
@@ -414,9 +423,6 @@ set(handles.brkpn,'Enable','off');
 set(handles.addFunction,'Enable','on');
 set(handles.opmenu,'Enable','off');
 set(handles.initTime,'string',0);
-if(get(handles.opmenu,'value')==1)
-clear();
-end
 
 % --- Executes on selection change in opmenu.
 function opmenu_Callback(hObject, eventdata, handles)

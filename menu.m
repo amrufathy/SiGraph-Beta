@@ -75,7 +75,7 @@ function addFunction_Callback(hObject, eventdata, handles)
 global T1; global T2;
 global X1; global X2;
 global F;
-global Y;
+global Y;global tstep;
 
 if( ~isempty(get(handles.initTime,'string')))
     initTime = str2num(get(handles.initTime,'string'));
@@ -213,7 +213,7 @@ if(BreakPoints <= 0)
             case 4
                 [T1 X1]=multiply(T1,X1,T2,X2,tstep);
             case 5
-                [T1 X1]=convolve(T1,X1,T2,X2);
+                [T1 X1]=convolve(T1,X1,T2,X2,tstep);
     end
         T2=[];X2=[];
     set(handles.setbutton,'Enable','on');
@@ -432,7 +432,14 @@ function opmenu_Callback(hObject, eventdata, handles)
 
 % Hints: contents = cellstr(get(hObject,'String')) returns opmenu contents as cell array
 %        contents{get(hObject,'Value')} returns selected item from opmenu
-
+global tstep;
+if(get(hObject,'value')>1)
+            set(handles.stepTime,'string',tstep);
+            set(handles.stepTime,'enable','off');
+else
+    set(handles.stepTime,'enable','on');
+end
+    
 
 % >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 % >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

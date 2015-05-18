@@ -1,39 +1,27 @@
-function [T2,X2] = add(T2,X2,t,x)
-if (isempty(T2))
-    T2 = t;
-elseif (length(T2) < length(t))
-    diff = length(t) - length(T2);
-    new_matrix = zeros(1,diff);
-    if (t(1) <= T2(1))
-        if (X2(1) ~= x(1))
-            X2 = [X2, new_matrix];
-        else
-            X2 = [new_matrix, X2];
-        end
+function [T_out,X_out] = add(t1,x1,t2,x2,ts)
+if(length(t1)==0)
+    T_out=t2;
+    X_out=x2;
+else if(length(t2)==2)
+    T_out=t1;
+    X_out=x1;
     else
-        if (X2(1) ~= x(1))
-            X2 = [new_matrix, X2];
-        else
-            X2 = [X2, new_matrix];
+        if(t1(end)<t2(end))
+            x1 = [x1 zeroes(length(t2)-length(t1))];
+            t1= [t1(1:end-1) t1(end):ts:t2(end)];
+        else if(t2(end)<t1(end))
+            x2 = [x2 zeroes(length(t1)-length(t2))];
+            t2= [t2 t2(end-1):ts:t1(end)];
+            end
         end
+        if(t1(1) > t2(1))
+            x1 = [zeroes(length(t2)-length(t1))];
+            t1= [t2(1):ts:t1(1) t1(2:end)];
+        else if(t2(1)>t1(1))
+                x2 = [zeroes(length(t1)-length(t2)) x2];
+            t2= [t1(1):ts:t2(1) t2(2:end)];
+            end
+        end
+        T_out=t1;X_out=x1+x2;
     end
-    T2 = t;
-elseif (length(T2) > length(t))
-    diff = length(T2) - length(t);
-    new_matrix = zeros(1,diff);
-    if (t(1) <= T2(1))
-        if (X2(1) ~= x(1))
-            x = [x, new_matrix];
-        else
-            x = [new_matrix, x];
-        end
-    else
-        if (X2(1) ~= x(1))
-            x = [new_matrix, x];
-        else
-            x = [x, new_matrix];
-        end
-    end
-end
-X2 = X2 + x;
 end

@@ -1,39 +1,27 @@
-function [T4,X4] = multiply(T4,X4,t,x)
-if (T4 == 1)
-    T4 = t;
-elseif (length(T4) < length(t))
-    diff = length(t) - length(T4);
-    new_matrix = ones(1,diff);
-    if (t(1) <= T4(1))
-        if (X4(1) ~= x(1))
-            X4 = [X4, new_matrix];
-        else
-            X4 = [new_matrix, X4];
-        end
+function [T_out,X_out] = multiply(t1,x1,t2,x2,ts)
+if(length(t1)==0)
+    T_out=t2;
+    X_out=x2;
+else if(length(t2)==2)
+    T_out=t1;
+    X_out=x1;
     else
-        if (X4(1) ~= x(1))
-            X4 = [new_matrix, X4];
-        else
-            X4 = [X4, new_matrix];
+        if(t1(end)<t2(end))
+            x1 = [x1 zeroes(length(t2)-length(t1))];
+            t1= [t1(1:end-1) t1(end):ts:t2(end)];
+        else if(t2(end)<t1(end))
+            x2 = [x2 zeroes(length(t1)-length(t2))];
+            t2= [t2 t2(end-1):ts:t1(end)];
+            end
         end
+        if(t1(1) > t2(1))
+            x1 = [zeroes(length(t2)-length(t1))];
+            t1= [t2(1):ts:t1(1) t1(2:end)];
+        else if(t2(1)>t1(1))
+                x2 = [zeroes(length(t1)-length(t2)) x2];
+            t2= [t1(1):ts:t2(1) t2(2:end)];
+            end
+        end
+        T_out=t1;X_out=x1.*x2;
     end
-    T4 = t;
-elseif (length(T4) > length(t))
-    diff = length(T4) - length(t);
-    new_matrix = ones(1,diff);
-    if (t(1) <= T4(1))
-        if (X4(1) ~= x(1))
-            x = [x, new_matrix];
-        else
-            x = [new_matrix, x];
-        end
-    else
-        if (X4(1) ~= x(1))
-            x = [new_matrix, x];
-        else
-            x = [x, new_matrix];
-        end
-    end
-end
-X4 = X4 .* x;
 end

@@ -207,14 +207,15 @@ BreakPoints=BreakPoints-1;
 if(BreakPoints <= 0)
     switch(get(handles.opmenu,'value'))
             case 2
-                [T1 X1]=add(T1,X1,T2,X2);
+                [T1 X1]=add(T1,X1,T2,X2,tstep);
             case 3
-                [T1 X1]=subtract(T1,X1,T2,X2);
+                [T1 X1]=add(T1,X1,T2,-X2,tstep);
             case 4
-                [T1 X1]=multiply(T1,X1,T2,X2);
+                [T1 X1]=multiply(T1,X1,T2,X2,tstep);
             case 5
                 [T1 X1]=convolute(T1,X1,T2,X2);
-        end
+    end
+        T2=[];X2=[];
     set(handles.setbutton,'Enable','on');
     set(handles.brkpn,'Enable','on');
     set(handles.addFunction,'Enable','off');
@@ -383,7 +384,7 @@ function clear()
 global T1; global T2;
 global X1; global X2;
 T1 = []; T2 = [];
-X1 = []; X2 = 0;
+X1 = []; X2 = [];
 global F;
 F = [];
 global Y;
@@ -412,6 +413,7 @@ set(handles.setbutton,'Enable','off');
 set(handles.brkpn,'Enable','off');
 set(handles.addFunction,'Enable','on');
 set(handles.opmenu,'Enable','off');
+set(handles.initTime,'string',0);
 if(get(handles.opmenu,'value')==1)
 clear();
 end

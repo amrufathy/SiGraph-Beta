@@ -57,7 +57,7 @@ handles.output = hObject;
 clear();
 set(handles.continuousbutton,'value',1);
 set(handles.timedomainbutton,'value',1);
-set ( gcf, 'Color', [0.70,0.70,0.70] )
+set ( gcf, 'Color', [0.70,0.70,0.70] );
 % Update handles structure
 guidata(hObject, handles);
 
@@ -75,7 +75,8 @@ function addFunction_Callback(hObject, eventdata, handles)
 global T1; global T2;
 global X1; global X2;
 global F;
-global Y;global tstep;
+global Y; global tstep;
+global BreakPoints;
 
 if( ~isempty(get(handles.initTime,'string')))
     initTime = str2num(get(handles.initTime,'string'));
@@ -105,7 +106,11 @@ if(tstep==0)
 end
 
 %Real Work
-t = initTime:tstep:finTime;
+if (BreakPoints == 1)
+    t = initTime:tstep:finTime;
+else
+    t = initTime:tstep:(finTime-tstep);
+end
 switch(get(handles.listbox1,'value'))
     case 1 %sin
         prompt = {'Amplitude:','Frequency:','Angle Shift'};
@@ -194,28 +199,28 @@ switch(get(handles.listbox1,'value'))
 end
 
 if(get(handles.opmenu,'value')==1)
-                T1 = [T1,t];
-X1 = [X1,x];
-[F,Y] = timetofreq(T1,X1);
-        else
-                T2 = [T2,t];
-X2 = [X2,x];
-[F,Y] = timetofreq(T2,X2);
+    T1 = [T1,t];
+    X1 = [X1,x];
+    [F,Y] = timetofreq(T1,X1);
+else
+    T2 = [T2,t];
+    X2 = [X2,x];
+    [F,Y] = timetofreq(T2,X2);
 end
-global BreakPoints;
+
 BreakPoints=BreakPoints-1;
 if(BreakPoints <= 0)
     switch(get(handles.opmenu,'value'))
-            case 2
-                [T1 X1]=add(T1,X1,T2,X2,tstep);
-            case 3
-                [T1 X1]=add(T1,X1,T2,-X2,tstep);
-            case 4
-                [T1 X1]=multiply(T1,X1,T2,X2,tstep);
-            case 5
-                [T1 X1]=convolve(T1,X1,T2,X2,tstep);
+        case 2
+            [T1,X1] = add(T1,X1,T2,X2,tstep);
+        case 3
+            [T1,X1] = add(T1,X1,T2,-X2,tstep);
+        case 4
+            [T1,X1] = multiply(T1,X1,T2,X2,tstep);
+        case 5
+            [T1,X1] = convolve(T1,X1,T2,X2,tstep);
     end
-        T2=[];X2=[];
+    T2 = [];X2 = [];
     set(handles.setbutton,'Enable','on');
     set(handles.brkpn,'Enable','on');
     set(handles.addFunction,'Enable','off');
@@ -228,9 +233,9 @@ if(get(handles.continuousbutton,'value') == get(handles.continuousbutton,'max'))
         set(handles.freqdomainbutton,'value',0);
         cla;
         if(get(handles.opmenu,'value')==1 || BreakPoints <= 0)
-                plot(T1,X1,'LineWidth',3);
+            plot(T1,X1,'LineWidth',3);
         else
-                plot(T2,X2,'LineWidth',3);
+            plot(T2,X2,'LineWidth',3);
         end
     elseif(get(handles.freqdomainbutton,'value') == get(handles.freqdomainbutton,'max'))
         set(handles.timedomainbutton,'value',0);
@@ -243,9 +248,9 @@ elseif(get(handles.discretebutton,'value') == get(handles.discretebutton,'max'))
         set(handles.freqdomainbutton,'value',0);
         cla;
         if(get(handles.opmenu,'value')==1 || BreakPoints <= 0)
-                stem(T1,X1,'LineWidth',3);
+            stem(T1,X1,'LineWidth',3);
         else
-                stem(T2,X2,'LineWidth',3);
+            stem(T2,X2,'LineWidth',3);
         end
     elseif(get(handles.freqdomainbutton,'value') == get(handles.freqdomainbutton,'max'))
         set(handles.timedomainbutton,'value',0);
@@ -280,15 +285,16 @@ global T1;
 global X1;
 global F;
 global Y;
+global BreakPoints;
 if(get(hObject,'value') == get(hObject,'max'))
     set(handles.discretebutton,'value',0);
     if(get(handles.timedomainbutton,'value') == get(handles.timedomainbutton,'max'))
         set(handles.freqdomainbutton,'value',0);
         cla;
         if(get(handles.opmenu,'value')==1 || BreakPoints <= 0)
-                plot(T1,X1,'LineWidth',3);
+            plot(T1,X1,'LineWidth',3);
         else
-                plot(T2,X2,'LineWidth',3);
+            plot(T2,X2,'LineWidth',3);
         end
     elseif(get(handles.freqdomainbutton,'value') == get(handles.freqdomainbutton,'max'))
         set(handles.timedomainbutton,'value',0);
@@ -311,15 +317,16 @@ global T1; global T2;
 global X1; global X2;
 global F;
 global Y;
+global BreakPoints;
 if(get(hObject,'value') == get(hObject,'max'))
     set(handles.continuousbutton,'value',0);
     if(get(handles.timedomainbutton,'value') == get(handles.timedomainbutton,'max'))
         set(handles.freqdomainbutton,'value',0);
         cla;
         if(get(handles.opmenu,'value')==1 || BreakPoints <= 0)
-                stem(T1,X1,'LineWidth',3);
+            stem(T1,X1,'LineWidth',3);
         else
-                stem(T2,X2,'LineWidth',3);
+            stem(T2,X2,'LineWidth',3);
         end
     elseif(get(handles.freqdomainbutton,'value') == get(handles.freqdomainbutton,'max'))
         set(handles.timedomainbutton,'value',0);
@@ -338,8 +345,8 @@ function timedomainbutton_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 % Hint: get(hObject,'Value') returns toggle state of timedomainbutton
-global T1; %global T2; global T3; global T4; global T5;
-global X1; %global X2; global X3; global X4; global X5;
+global T1; 
+global X1;
 if(get(hObject,'value') == get(hObject,'max'))
     set(handles.freqdomainbutton,'value',0);
     if(get(handles.continuousbutton,'value') == get(handles.continuousbutton,'max'))
@@ -408,7 +415,7 @@ function setbutton_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 if(get(handles.opmenu,'value')==1)
-clear();
+    clear();
 else
     global T1;
     if(isempty(T1))
@@ -434,12 +441,12 @@ function opmenu_Callback(hObject, eventdata, handles)
 %        contents{get(hObject,'Value')} returns selected item from opmenu
 global tstep;
 if(get(hObject,'value')>1)
-            set(handles.stepTime,'string',tstep);
-            set(handles.stepTime,'enable','off');
+    set(handles.stepTime,'string',tstep);
+    set(handles.stepTime,'enable','off');
 else
     set(handles.stepTime,'enable','on');
 end
-    
+
 
 % >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 % >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -508,14 +515,12 @@ function axes1_CreateFcn(hObject, eventdata, handles)
 % handles    empty - handles not created until after all CreateFcns called
 % Hint: place code in OpeningFcn to populate axes1
 
-
 function brkpn_Callback(hObject, eventdata, handles)
 % hObject    handle to brkpn (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 % Hints: get(hObject,'String') returns contents of brkpn as text
 %        str2double(get(hObject,'String')) returns contents of brkpn as a double
-
 
 % --- Executes during object creation, after setting all properties.
 function brkpn_CreateFcn(hObject, eventdata, handles)
@@ -528,7 +533,6 @@ function brkpn_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
-
 
 % --- Executes during object creation, after setting all properties.
 function opmenu_CreateFcn(hObject, eventdata, handles)
